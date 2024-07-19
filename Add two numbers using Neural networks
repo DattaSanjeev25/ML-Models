@@ -1,0 +1,28 @@
+import random
+import numpy as np
+import pandas as pd
+
+x=[]
+y=[]
+
+for i in range(1000):
+  x.append([random.randint(0,1000),random.randint(0,1000)])
+  y.append(sum(x[i]))
+
+x=np.array(x)
+y=np.array(y).reshape(-1,1)
+
+from keras.models import Sequential
+from keras.layers import Dense
+
+model=Sequential()
+model.add(Dense(units=6,activation='relu',input_dim=2))
+model.add(Dense(units=12,activation='relu'))
+model.add(Dense(units=12,activation='relu'))
+model.add(Dense(units=6,activation='relu'))
+model.add(Dense(units=1,activation='relu'))
+model.compile(optimizer='adam',loss='mean_squared_error')
+model.fit(x,y,epochs=200)
+pred=np.array([[225,22]])
+predd=model.predict(pred)
+print(np.round(predd))
